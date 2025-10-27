@@ -1,0 +1,97 @@
+import React, { useState } from 'react';
+import { Layout, Menu, Button, Drawer, theme } from 'antd';
+import {
+  MenuOutlined,
+  HomeOutlined,
+  UserOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
+
+const { Header, Sider, Content } = Layout;
+
+// 1. 메뉴 아이템 (Sider와 Drawer가 공유)
+const menuItems = [
+  { key: '1', icon: <HomeOutlined />, label: 'Dashboard' },
+  { key: '2', icon: <UserOutlined />, label: 'Profile' },
+  { key: '3', icon: <SettingOutlined />, label: 'Settings' },
+];
+
+// 2. 페이지 콘텐츠를 children으로 받도록 Props 정의
+interface MainLayoutProps {
+  children: React.ReactNode;
+}
+
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  // 3. 모바일용 플로팅 사이드바(Drawer) 표시 여부 상태
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+
+  return (
+    <Layout className="min-h-screen w-full">
+      <Sider
+        width={200}
+        className="hidden lg:block"
+      >
+        <div className="h-16 flex items-center justify-center text-xl font-bold">
+          LOGO
+        </div>
+        <Menu mode="inline" defaultSelectedKeys={['1']} items={menuItems} />
+      </Sider>
+
+      <Layout>
+        <Header
+          style={{ background: colorBgContainer }}
+          className="p-0 flex items-center justify-between"
+        >
+          <div>
+            <Button
+              type="text"
+              icon={<MenuOutlined />}
+              onClick={() => setMobileDrawerOpen(true)}
+              className="block lg:hidden text-lg w-16 h-16"
+            />
+          </div>
+
+          <div className="pr-4">
+            <span>User Profile</span>
+          </div>
+        </Header>
+
+        <Content
+          className="m-4 lg:m-6"
+        >
+          <div
+            style={{
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+            }}
+            className="p-4 lg:p-6 min-h-[calc(100vh-128px)]"
+          >
+            {children}
+          </div>
+        </Content>
+      </Layout>
+
+      <Drawer
+        title="MENU"
+        placement="left"
+        onClose={() => setMobileDrawerOpen(false)}
+        open={mobileDrawerOpen}
+        classNames={{ body: "p-0" }}
+      >
+        <Menu
+          mode="inline"
+          defaultSelectedKeys={['1']}
+          items={menuItems}
+          // 메뉴 클릭 시 Drawer가 닫히도록 설정
+          onClick={() => setMobileDrawerOpen(false)}
+        />
+      </Drawer>
+    </Layout>
+  );
+};
+
+export default MainLayout;
