@@ -17,6 +17,9 @@ import {
   Modal,
 } from 'antd';
 import { MailOutlined } from '@ant-design/icons';
+import useApiSpecs from 'src/hooks/useApiSpecs';
+import ApiMessageDisplay from './ApiMessageDisplay';
+import ApiSpecDetail from './ApiSpecDetail';
 
 const { Title, Paragraph, Text, Link } = Typography;
 
@@ -47,9 +50,11 @@ const tableData = [
 
 const ThemeTestContent: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {data} = useApiSpecs();
   
   return (
     <Space direction="vertical" className="w-full">
+      { data && <ApiSpecDetail api={data[100]} />}
       {/* 1. Typography */}
       <Card title="Typography">
         <Title>h1. Ant Design</Title>

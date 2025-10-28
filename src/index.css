@@ -5,3 +5,13 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
 
+@theme inline {
+  --color-primary: var(--ant-color-primary);
+  --color-success: var(--ant-color-success);
+  --color-warning: var(--ant-color-warning);
+  --color-error: var(--ant-color-error);
+  --color-info: var(--ant-color-info);
+  --color-background: var(--ant-color-bg-container);
+  --color-layout: var(--ant-color-bg-layout);
+  --color-text: var(--ant-color-text-base);
+}

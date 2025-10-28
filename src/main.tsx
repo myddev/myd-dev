@@ -3,32 +3,34 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { StyleProvider } from '@ant-design/cssinjs';
 import { ConfigProvider } from 'antd';
-import App from './App.tsx';
-import { getElegantIndigoTheme, getForestGreenTheme, getGraphiteGrayTheme, getModernSlateTheme, getVibrantTealTheme } from './theme';
+import { getGraphiteGrayTheme } from './theme';
 import MainLayout from './components/MainLayout.tsx';
 import ThemeTestContent from './components/ThemeTestContent.tsx';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const Root: React.FC = () => {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
 
-  // ... (useEffect, 핸들러 함수, useMemo 등 기존 로직은 동일)
   const activeTheme = useMemo(() => {
     return getGraphiteGrayTheme(mode);
   }, [mode]);
   return (
-    <ConfigProvider theme={activeTheme}>
+    <ConfigProvider theme={{ ...activeTheme, cssVar: { key: 'ant' } }}>
       <MainLayout>
-        {/* <div></div> */}
         <ThemeTestContent />
       </MainLayout>
     </ConfigProvider>
   );
 };
 
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <StyleProvider layer>
-      <Root />
+      <QueryClientProvider client={queryClient}>
+        <Root />
+      </QueryClientProvider>
     </StyleProvider>
   </StrictMode>
 );

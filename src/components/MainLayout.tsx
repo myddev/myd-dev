@@ -6,6 +6,7 @@ import {
   UserOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
+import SvgLogo from 'src/assets/logo.svg?react'
 
 const { Header, Sider, Content } = Layout;
 
@@ -16,13 +17,11 @@ const menuItems = [
   { key: '3', icon: <SettingOutlined />, label: 'Settings' },
 ];
 
-// 2. 페이지 콘텐츠를 children으로 받도록 Props 정의
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  // 3. 모바일용 플로팅 사이드바(Drawer) 표시 여부 상태
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   const {
@@ -36,7 +35,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         className="hidden lg:block"
       >
         <div className="h-16 flex items-center justify-center text-xl font-bold">
-          LOGO
+          <SvgLogo className='size-16 mr-2 fill-text' />
         </div>
         <Menu mode="inline" defaultSelectedKeys={['1']} items={menuItems} />
       </Sider>

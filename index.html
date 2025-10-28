@@ -5,6 +5,64 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>myd-dev</title>
+    <style>
+      /* 
+       * SSoT: Graphite Gray Theme 
+       */
+
+      /* 1. Light Mode Defaults */
+      :root {
+        /* Brand & Semantic Colors */
+        --color-primary: #3B82F6;
+        --color-success: #22C55E;
+        --color-warning: #F59E0B;
+        --color-error: #DC2626;
+        --color-info: #3B82F6;
+        /* Surface Colors (배경) */
+        --surface-page: #F9FAFB;
+        --surface-container: #FFFFFF;
+        --surface-selected: #F3F4F6;
+        --surface-trigger: #F3F4F6;
+        --surface-table-header: #F9FAFB;
+        /* Text & Content Colors */
+        --text-base: #1F2937;
+        --text-secondary: #4B5563;
+        --text-on-primary: #FFFFFF;
+        --text-hover: #000000;
+        --text-selected: var(--color-primary);
+        --text-trigger: #6B7280;
+      }
+
+      /* 2. Dark Mode Overrides */
+      .dark {
+        /* Brand & Semantic Colors */
+        --color-primary: #60A5FA;
+        --color-success: #29A66B;
+        --color-warning: #FBBF24;
+        --color-error: #F87171;
+        --color-info: #60A5FA;
+        /* Surface Colors (배경) */
+        --surface-page: #171717;
+        --surface-container: #262626;
+        --surface-selected: #404040;
+        --surface-trigger: #404040;
+        --surface-table-header: #374151;
+        /* Text & Content Colors */
+        --text-base: #E5E7EB;
+        --text-secondary: #9CA3AF;
+        --text-on-primary: #1F2937;
+        --text-hover: #FFFFFF;
+        --text-selected: var(--color-primary);
+        --text-trigger: #9CA3AF;
+      }
+      
+      /* body 기본 스타일도 여기에 두는 것이 일관성 있습니다. */
+      body {
+        background-color: var(--surface-page);
+        color: var(--text-base);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
