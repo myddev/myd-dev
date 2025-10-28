@@ -1,4 +1,12 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+@font-face {
+    font-family: 'HanSpecialChars';
+    src: url('assets/HanSpecialChars.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+F02B0-F02B9;
+}
 @layer theme, base, antd, components, utilities;
 
 @import "tailwindcss/theme.css" layer(theme);
@@ -14,4 +22,10 @@
   --color-background: var(--ant-color-bg-container);
   --color-layout: var(--ant-color-bg-layout);
   --color-text: var(--ant-color-text-base);
+}
+
+@layer utilities {
+  html {
+    font-family: "Pretendard Variable", Pretendard, HanSpecialChars, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  }
 }

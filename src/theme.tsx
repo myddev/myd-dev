@@ -200,6 +200,7 @@ export const getGraphiteGrayTheme = (mode: 'light' | 'dark'): ThemeConfig => {
   return {
     algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
     token: {
+      fontFamily: 'font-family: "Pretendard Variable", Pretendard, HanSpecialChars, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif',
       colorPrimary: primaryColor,
       colorSuccess: isDarkMode ? '#29A66B' : '#22C55E',
       colorWarning: isDarkMode ? '#FBBF24' : '#F59E0B',
