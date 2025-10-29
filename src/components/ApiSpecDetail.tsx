@@ -26,8 +26,8 @@ export default function ApiSpecDetail({ api }: ApiSpecDetailProps) {
   // Error Response가 있으면 탭에 추가
   if (api.errorResponse) {
     specTabs.push({
-      key: 'error',
-      label: 'Error Response',
+      key: 'error-response',
+      label: '에러 응답',
       children: <ApiMessageDisplay message={api.errorResponse} />,
     });
   }

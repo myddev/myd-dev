@@ -17,8 +17,7 @@ import {
   Modal,
 } from 'antd';
 import { MailOutlined } from '@ant-design/icons';
-import useApiSpecs from 'src/hooks/useApiSpecs';
-import ApiMessageDisplay from './ApiMessageDisplay';
+import { useApiSpecs } from 'src/hooks/useApiSpecs';
 import ApiSpecDetail from './ApiSpecDetail';
 
 const { Title, Paragraph, Text, Link } = Typography;
@@ -43,18 +42,36 @@ const tableColumns = [
 ];
 
 const tableData = [
-  { key: '1', name: 'John Brown', age: 32, address: 'New York No. 1 Lake Park', status: 'active' },
-  { key: '2', name: 'Jim Green', age: 42, address: 'London No. 1 Lake Park', status: 'pending' },
-  { key: '3', name: 'Joe Black', age: 32, address: 'Sidney No. 1 Lake Park', status: 'rejected' },
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+    status: 'active',
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+    status: 'pending',
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park',
+    status: 'rejected',
+  },
 ];
 
 const ThemeTestContent: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {data} = useApiSpecs();
-  
+  const { data } = useApiSpecs();
+
   return (
     <Space direction="vertical" className="w-full">
-      { data && <ApiSpecDetail api={data[100]} />}
+      {data && <ApiSpecDetail api={data[0]} />}
       {/* 1. Typography */}
       <Card title="Typography">
         <Title>h1. Ant Design</Title>
@@ -69,7 +86,7 @@ const ThemeTestContent: React.FC = () => {
           .
         </Paragraph>
       </Card>
-      
+
       {/* 2. Buttons */}
       <Card title="Buttons">
         <Space wrap>
@@ -78,10 +95,12 @@ const ThemeTestContent: React.FC = () => {
           <Button type="dashed">Dashed Button</Button>
           <Button type="text">Text Button</Button>
           <Button type="link">Link Button</Button>
-          <Button type="primary" danger>Primary Danger</Button>
+          <Button type="primary" danger>
+            Primary Danger
+          </Button>
         </Space>
       </Card>
-      
+
       {/* 3. Alerts */}
       <Card title="Alerts">
         <Space direction="vertical" className="w-full">
@@ -91,7 +110,7 @@ const ThemeTestContent: React.FC = () => {
           <Alert message="Error Text" type="error" showIcon />
         </Space>
       </Card>
-      
+
       {/* 4. Form Controls */}
       <Card title="Form Controls">
         <Space wrap align="center">
@@ -109,11 +128,15 @@ const ThemeTestContent: React.FC = () => {
           <DatePicker />
         </Space>
       </Card>
-      
+
       {/* 5. Data Display */}
       <Card title="Data Display">
         <Title level={4}>Table</Title>
-        <Table columns={tableColumns} dataSource={tableData} pagination={false} />
+        <Table
+          columns={tableColumns}
+          dataSource={tableData}
+          pagination={false}
+        />
         <Divider />
         <Title level={4}>Tags & Badge</Title>
         <Space>
@@ -130,25 +153,26 @@ const ThemeTestContent: React.FC = () => {
 
       {/* 6. Feedback */}
       <Card title="Feedback Components">
-         <Space wrap align="center">
-            <Spin size="large" />
-            <Progress type="circle" percent={75} />
-            <Progress percent={50} status="active" />
-            <Button type="primary" onClick={() => setIsModalOpen(true)}>Open Modal</Button>
-         </Space>
+        <Space wrap align="center">
+          <Spin size="large" />
+          <Progress type="circle" percent={75} />
+          <Progress percent={50} status="active" />
+          <Button type="primary" onClick={() => setIsModalOpen(true)}>
+            Open Modal
+          </Button>
+        </Space>
       </Card>
-      
-      <Modal 
-        title="Basic Modal" 
-        open={isModalOpen} 
-        onOk={() => setIsModalOpen(false)} 
+
+      <Modal
+        title="Basic Modal"
+        open={isModalOpen}
+        onOk={() => setIsModalOpen(false)}
         onCancel={() => setIsModalOpen(false)}
       >
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
       </Modal>
-
     </Space>
   );
 };

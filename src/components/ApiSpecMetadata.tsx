@@ -53,7 +53,9 @@ export default function ApiSpecMetadata({ api }: ApiSpecMetadataProps) {
 
       <Descriptions.Item label="Industry">
         <Space wrap size={[0, 8]}>
-          {industry?.map((ind) => <Tag key={ind}>{ind}</Tag>)}
+          {industry?.map((ind) => (
+            <Tag key={ind}>{ind}</Tag>
+          ))}
         </Space>
       </Descriptions.Item>
 

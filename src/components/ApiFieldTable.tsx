@@ -3,6 +3,8 @@ import { Alert, Button, Space, Table, Tag, Typography } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useState } from 'react';
 import type IApiSpecField from 'src/types/IApiSpecField';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const ExpandableNote: React.FC<{ note: string; isSimple: boolean }> = ({
   note,
@@ -25,7 +27,19 @@ const ExpandableNote: React.FC<{ note: string; isSimple: boolean }> = ({
         {isExpanded ? '비고 접기' : '비고'}
       </Button>
 
-      {isExpanded && <Alert message={note} />}
+      {isExpanded && <div className="mt-1 p-3 bg-layout dark:bg-background rounded border dark:border-gray-700">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]} // GFM(테이블, 줄바꿈 등) 활성화
+            
+            // 4. Tailwind Typography 플러그인 클래스 적용
+            // prose: 기본 스타일 적용
+            // prose-sm: 작은 폰트 크기
+            // dark:prose-invert: 다크 모드에서 텍스트 색상 반전
+            // className="prose prose-sm dark:prose-invert max-w-none"
+          >
+            {note}
+          </ReactMarkdown>
+        </div>}
     </div>
   );
 };
