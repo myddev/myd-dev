@@ -1,5 +1,7 @@
 import { Tabs, Typography, Divider } from 'antd';
 import type { TabsProps } from 'antd';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import ApiMessageDisplay from 'src/components/ApiMessageDisplay';
 import ApiSpecMetadata from 'src/components/ApiSpecMetadata'; // 1. 임포트
 import type IApiSpec from 'src/types/IApiSpec';
@@ -34,13 +36,17 @@ export default function ApiSpecDetail({ api }: ApiSpecDetailProps) {
 
   return (
     <div className="space-y-6">
-      <div className="border-b pb-4 dark:border-b-gray-700">
+      <div>
         <Typography.Title level={3} className="mb-2">
-          {api.apiName}
+          {`[${api.apiId}] ${api.apiName}`}
         </Typography.Title>
-        <Typography.Paragraph type="secondary">
-          {api.description}
-        </Typography.Paragraph>
+        <div className="prose prose-sm prose-secondary max-w-none">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]} // GFM(테이블, 줄바꿈 등) 활성화
+          >
+            {api.description}
+          </ReactMarkdown>
+        </div>
       </div>
 
       <ApiSpecMetadata api={api} />

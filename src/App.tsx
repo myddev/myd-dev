@@ -1,27 +1,39 @@
-import { useState } from 'react';
-import { Button, Card, Space } from 'antd';
+import { ConfigProvider } from 'antd';
+import { useMemo } from 'react';
+import { useThemeEffect } from 'src/hooks/useThemeEffect';
+import { getGraphiteGrayTheme } from 'src/theme';
+import { useEffectiveTheme } from './hooks/useEffectiveTheme';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
+import { routeTree } from './routeTree.gen';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-function App() {
-  const [count, setCount] = useState(0);
+// TanStack Query 클라이언트 생성
+const queryClient = new QueryClient();
 
-  return (
-    <>
-      <h1>골든 허니 테마 테스트</h1>
-      <Space wrap>
-        <Button type="primary">Primary Button</Button>
-        <Button>Default Button</Button>
-        <Button type="dashed">Dashed Button</Button>
-        <Button type="link">Link Button</Button>
-      </Space>
+const router = createRouter({
+  routeTree,
+  context: {
+    queryClient,
+  },
+});
 
-      <Card title="테스트 카드" style={{ marginTop: 20 }}>
-        <p>
-          이 카드의 배경색(<code>colorBgContainer</code>)과 텍스트 색상(
-          <code>colorTextBase</code>)은 모두 테마 토큰을 따릅니다.
-        </p>
-      </Card>
-    </>
-  );
+// App이 렌더링될 때 전역 상태를 등록
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
 }
 
-export default App;
+export default function App() {
+  useThemeEffect();
+  const mode = useEffectiveTheme();
+  const currentTheme = useMemo(() => getGraphiteGrayTheme(mode), [mode]);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ConfigProvider theme={{ ...currentTheme, cssVar: { key: 'ant' } }}>
+        <RouterProvider router={router} />
+      </ConfigProvider>
+    </QueryClientProvider>
+  );
+}

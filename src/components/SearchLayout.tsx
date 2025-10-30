@@ -19,13 +19,13 @@ export default function SearchLayout({ listPanel, detailPanel }: SearchLayoutPro
         className="mb-4"
       />
       {/* 메인 Flex 컨테이너 */}
-      <div className="flex h-full overflow-hidden">
+      <div className="flex flex-1 overflow-hidden">
         {/* 1. 좌측 패널 (리스트) */}
         <div
           className={`h-full overflow-y-auto ${
             hasDetailPanel
               // 상세 패널이 있으면: 데스크톱(lg)에서만 보이고 1/3 너비
-              ? 'w-full hidden lg:block lg:w-1/3 border-r pr-4 dark:border-r-gray-700'
+              ? 'w-full hidden lg:block lg:w-1/3 border-r pr-4 border-border'
               // 상세 패널이 없으면(null): 항상 전체 너비
               : 'w-full'
           }`}

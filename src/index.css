@@ -1,17 +1,18 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
 @font-face {
-    font-family: 'HanSpecialChars';
-    src: url('assets/HanSpecialChars.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-    unicode-range: U+F02B0-F02B9;
+  font-family: 'HanSpecialChars';
+  src: url('assets/HanSpecialChars.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+F02B0-F02B9;
 }
 @layer theme, base, antd, components, utilities;
 
-@import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/preflight.css" layer(base);
-@import "tailwindcss/utilities.css" layer(utilities);
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@plugin '@tailwindcss/typography';
 
 @theme inline {
   --color-primary: var(--ant-color-primary);
@@ -19,13 +20,109 @@
   --color-warning: var(--ant-color-warning);
   --color-error: var(--ant-color-error);
   --color-info: var(--ant-color-info);
+  --color-link: var(--ant-color-link);
+  --color-highlight: var(--ant-color-highlight);
+  --color-white: var(--ant-color-white);
   --color-background: var(--ant-color-bg-container);
   --color-layout: var(--ant-color-bg-layout);
-  --color-text: var(--ant-color-text-base);
+  --color-background-elevated: var(--ant-color-bg-elevated);
+  --color-background-disabled: var(--ant-color-bg-container-disabled);
+  --color-background-alt: var(--ant-color-fill-alter);
+  --color-background-mask: var(--ant-color-bg-mask);
+  --color-background-blur: var(--ant-color-bg-blur);
+  --color-text: var(--ant-color-text);
+  --color-text-secondary: var(--ant-color-text-secondary);
+  --color-text-tertiary: var(--ant-color-text-tertiary);
+  --color-text-quaternary: var(--ant-color-text-quaternary);
+  --color-text-heading: var(--ant-color-text-heading);
+  --color-text-description: var(--ant-color-text-description);
+  --color-text-disabled: var(--ant-color-text-disabled);
+  --color-text-placeholder: var(--ant-color-text-placeholder);
+  --color-border: var(--ant-color-border);
+  --color-border-secondary: var(--ant-color-border-secondary);
+  --color-split: var(--ant-color-split);
+  --color-fill: var(--ant-color-fill);
+  --color-fill-secondary: var(--ant-color-fill-secondary);
+  --color-fill-tertiary: var(--ant-color-fill-tertiary);
+  --color-fill-quaternary: var(--ant-color-fill-quaternary);
+  --color-primary-bg: var(--ant-color-primary-bg);
+  --color-success-bg: var(--ant-color-success-bg);
+  --color-warning-bg: var(--ant-color-warning-bg);
+  --color-error-bg: var(--ant-color-error-bg);
+  --color-info-bg: var(--ant-color-info-bg);
 }
 
 @layer utilities {
+  .prose {
+    --tw-prose-body: var(--ant-color-text);
+    --tw-prose-headings: var(--ant-color-text-heading);
+    --tw-prose-links: var(--ant-color-link);
+    --tw-prose-bold: var(--ant-color-text-heading);
+    --tw-prose-bullets: var(--ant-color-text-secondary);
+    --tw-prose-hr: var(--ant-color-border-secondary);
+    --tw-prose-quotes: var(--ant-color-text-secondary);
+    --tw-prose-quote-borders: var(--ant-color-border-secondary);
+    --tw-prose-code: var(--ant-color-text-heading);
+    --tw-prose-pre-code: var(--ant-color-text-heading);
+    --tw-prose-pre-bg: var(--ant-color-fill-tertiary);
+    --tw-prose-th-borders: var(--ant-color-border-secondary);
+    --tw-prose-td-borders: var(--ant-color-border-secondary);
+
+    /* --- 다크 모드 Prose 스타일 (prose-invert가 사용) --- */
+    /* 여기도 마찬가지로 --ant- 변수를 직접 참조합니다. */
+    --tw-prose-invert-body: var(--ant-color-text);
+    --tw-prose-invert-headings: var(--ant-color-text-heading);
+    --tw-prose-invert-links: var(--ant-color-link);
+    --tw-prose-invert-bold: var(--ant-color-text-heading);
+    --tw-prose-invert-bullets: var(--ant-color-text-secondary);
+    --tw-prose-invert-hr: var(--ant-color-border-secondary);
+    --tw-prose-invert-quotes: var(--ant-color-text-secondary);
+    --tw-prose-invert-quote-borders: var(--ant-color-border-secondary);
+    --tw-prose-invert-code: var(--ant-color-text-heading);
+    --tw-prose-invert-pre-code: var(--ant-color-text-heading);
+    --tw-prose-invert-pre-bg: var(--ant-color-fill-tertiary);
+    --tw-prose-invert-th-borders: var(--ant-color-border-secondary);
+    --tw-prose-invert-td-borders: var(--ant-color-border-secondary);
+  }
+
+  .prose-secondary {
+    --tw-prose-body: var(--ant-color-text-secondary); 
+    --tw-prose-invert-body: var(--ant-color-text-secondary)
+  }
+
+  .prose ul,
+  .prose ol {
+    padding-left: 1.25rem;
+
+    list-style-type: disc;
+    margin: 0.75em 0;
+  }
+
+  .prose ol {
+    list-style-type: decimal;
+  }
+
+  .prose li {
+    margin: 0.25em 0;
+  }
+
   html {
-    font-family: "Pretendard Variable", Pretendard, HanSpecialChars, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    font-family:
+      'Pretendard Variable',
+      Pretendard,
+      HanSpecialChars,
+      -apple-system,
+      BlinkMacSystemFont,
+      system-ui,
+      Roboto,
+      'Helvetica Neue',
+      'Segoe UI',
+      'Apple SD Gothic Neo',
+      'Noto Sans KR',
+      'Malgun Gothic',
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      sans-serif;
   }
 }

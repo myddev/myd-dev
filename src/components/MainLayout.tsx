@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Button, Drawer, theme } from 'antd';
+import { Layout, Menu, Button, Drawer, theme, Switch } from 'antd';
 import {
   MenuOutlined,
   HomeOutlined,
   UserOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
-import SvgLogo from 'src/assets/logo.svg?react'
+import SvgLogo from 'src/assets/logo.svg?react';
+import { useThemeEffect } from 'src/hooks/useThemeEffect';
+import { useThemeStore } from 'src/stores/theme.store';
+import { useEffectiveTheme } from 'src/hooks/useEffectiveTheme';
+import type { SwitchChangeEventHandler } from 'antd/es/switch';
 
 const { Header, Sider, Content } = Layout;
 
@@ -23,27 +27,26 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const { setTheme } = useThemeStore();
+  const mode = useEffectiveTheme();
 
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+  const isDarkMode = mode === 'dark';
+  const setIsDarkMode: SwitchChangeEventHandler = (checked) => {
+    setTheme(checked == true ? 'dark' : 'light');
+  };
 
   return (
     <Layout className="min-h-screen w-full">
-      <Sider
-        width={200}
-        className="hidden lg:block"
-      >
+      <Sider width={200} className="hidden lg:block">
         <div className="h-16 flex items-center justify-center text-xl font-bold">
-          <SvgLogo className='size-16 mr-2 fill-text' />
+          <SvgLogo className="size-16 mr-2 fill-text" />
         </div>
         <Menu mode="inline" defaultSelectedKeys={['1']} items={menuItems} />
       </Sider>
 
       <Layout>
         <Header
-          style={{ background: colorBgContainer }}
-          className="p-0 flex items-center justify-between"
+          className="p-0 flex items-center justify-between bg-background"
         >
           <div>
             <Button
@@ -55,20 +58,17 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </div>
 
           <div className="pr-4">
-            <span>User Profile</span>
+            <Switch
+              checkedChildren="Dark"
+              unCheckedChildren="Light"
+              checked={isDarkMode}
+              onChange={setIsDarkMode}
+            />
           </div>
         </Header>
 
-        <Content
-          className="m-4 lg:m-6"
-        >
-          <div
-            style={{
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-            className="p-4 lg:p-6 min-h-[calc(100vh-128px)]"
-          >
+        <Content className="m-4 lg:m-6">
+          <div className="p-4 lg:p-6 h-[calc(100vh-128px)] bg-background radius">
             {children}
           </div>
         </Content>
@@ -79,7 +79,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         placement="left"
         onClose={() => setMobileDrawerOpen(false)}
         open={mobileDrawerOpen}
-        classNames={{ body: "p-0" }}
+        classNames={{ body: 'p-0' }}
       >
         <Menu
           mode="inline"
