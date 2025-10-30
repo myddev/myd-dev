@@ -1,8 +1,5 @@
-import { useState, useEffect } from 'react';
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
-import { ConfigProvider, Switch } from 'antd';
 import { QueryClient } from '@tanstack/react-query';
-import { getGraphiteGrayTheme } from 'src/theme';
 import MainLayout from 'src/components/MainLayout';
 
 // 라우터 컨텍스트 타입 정의

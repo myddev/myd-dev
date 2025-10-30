@@ -2,6 +2,8 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { apiSpecsQueryOptions } from 'src/hooks/useApiSpecs';
 import { Spin } from 'antd';
+import { useEffect } from 'react';
+import { useSearchStore } from 'src/stores/search.store';
 
 export const Route = createFileRoute('/search')({
   // 1. 'allApis' 데이터를 미리 로드하여 자식 라우트가 사용하도록 함
@@ -14,5 +16,15 @@ export const Route = createFileRoute('/search')({
   pendingComponent: () => <Spin size="large" className="m-auto" />,
 
   // 3. 자식 라우트(index 또는 $apiId)를 렌더링할 <Outlet>
-  component: () => <Outlet />,
+  component: () => {
+    const allApis = Route.useLoaderData();
+    // 3. 스토어에서 초기화 함수 가져오기
+    const initializeIndex = useSearchStore((s) => s.initializeIndex);
+
+    // 4. 데이터가 로드되면 인덱스를 *한 번* 생성
+    useEffect(() => {
+      initializeIndex(allApis);
+    }, [allApis, initializeIndex]);
+    return <Outlet />;
+  },
 });

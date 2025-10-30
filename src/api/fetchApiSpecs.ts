@@ -1,4 +1,3 @@
-import type RawApiSpec from "src/types/dto/RawApiSpec";
 import type RawApiSpecMessage from "src/types/dto/RawApiSpecMessage";
 import type V1SyntheticApiSpec from "src/types/dto/V1SyntheticApISpec";
 import type IApiSpec from "src/types/IApiSpec";

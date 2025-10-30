@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Button, Drawer, theme, Switch } from 'antd';
+import { Layout, Menu, Button, Drawer, Switch } from 'antd';
 import {
   MenuOutlined,
   HomeOutlined,
@@ -7,7 +7,6 @@ import {
   SettingOutlined,
 } from '@ant-design/icons';
 import SvgLogo from 'src/assets/logo.svg?react';
-import { useThemeEffect } from 'src/hooks/useThemeEffect';
 import { useThemeStore } from 'src/stores/theme.store';
 import { useEffectiveTheme } from 'src/hooks/useEffectiveTheme';
 import type { SwitchChangeEventHandler } from 'antd/es/switch';
