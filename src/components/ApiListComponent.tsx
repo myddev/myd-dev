@@ -1,12 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import type IApiSpec from '@/types/IApiSpec';
 import { Badge } from '@/components/ui/badge';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
 interface Props {
@@ -30,7 +25,7 @@ export default function ApiListComponent({ apis }: Props) {
             <Card
               className={cn(
                 'transition-colors hover:bg-muted shadow-none p-4 gap-1',
-                isActive && 'border-primary',
+                isActive && 'border-primary'
               )}
             >
               <CardHeader className="p-0">
@@ -43,8 +38,8 @@ export default function ApiListComponent({ apis }: Props) {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <Badge
-                      variant={
-                        api.httpMethod === 'GET' ? 'secondary' : 'default'
+                      className={
+                        api.httpMethod === 'GET' ? 'bg-warn' : 'bg-success'
                       }
                     >
                       {api.httpMethod}

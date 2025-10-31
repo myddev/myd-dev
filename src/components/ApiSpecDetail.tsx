@@ -4,13 +4,9 @@ import ApiMessageDisplay from '@/components/ApiMessageDisplay';
 import ApiSpecMetadata from '@/components/ApiSpecMetadata';
 import type IApiSpec from '@/types/IApiSpec';
 
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
 
 interface ApiSpecDetailProps {
   api: IApiSpec;
@@ -22,13 +18,18 @@ export default function ApiSpecDetail({ api }: ApiSpecDetailProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold tracking-tight mb-2">
-          {`[${api.apiId}] ${api.apiName}`}
-        </h2>
+        <div className="flex flex-row gap-2 items-center">
+          <h2 className="text-2xl font-semibold tracking-tight mb-2">
+            {`[${api.apiId}]`}
+          </h2>
+          <h2 className="text-2xl font-semibold tracking-tight mb-2">
+            {api.apiName}
+          </h2>
+          <Badge variant="default">{api.version}</Badge>
+        </div>
+
         <div className="prose prose-sm prose-muted max-w-none">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-          >
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {api.description}
           </ReactMarkdown>
         </div>

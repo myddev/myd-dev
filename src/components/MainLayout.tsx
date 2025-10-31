@@ -13,9 +13,7 @@ import { useThemeStore } from '@/stores/theme.store';
 import { useEffectiveTheme } from '@/hooks/useEffectiveTheme';
 
 // 네비게이션 메뉴 컴포넌트
-const AppNavigation: React.FC<{ isMobile?: boolean }> = ({
-  isMobile = false,
-}) => {
+const AppNavigation = () => {
   return (
     <nav className="flex flex-col gap-2 px-4">
       {/* TODO: 실제 라우팅을 위해 <Link> 컴포넌트와 조합해야 합니다. */}
@@ -67,7 +65,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-[200px] p-0 pt-10">
-                <AppNavigation isMobile />
+                <AppNavigation />
               </SheetContent>
             </Sheet>
           </div>

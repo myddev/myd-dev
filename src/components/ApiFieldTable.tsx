@@ -76,7 +76,7 @@ export default function ApiFieldTable({
                 <div className="flex flex-row flex-wrap gap-2">
                   <Badge variant="secondary">{field.type}</Badge>
                   {field.isRequired ? (
-                    <Badge variant="destructive">필수</Badge>
+                    <Badge className='bg-info'>필수</Badge>
                   ) : (
                     <Badge variant="outline">선택</Badge>
                   )}
