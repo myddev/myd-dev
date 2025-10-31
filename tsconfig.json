@@ -5,8 +5,6 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "noUnusedParameters": false,
-    "noUnusedLocals": false,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
