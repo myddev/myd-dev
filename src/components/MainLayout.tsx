@@ -1,94 +1,95 @@
-import React, { useState } from 'react';
-import { Layout, Menu, Button, Drawer, Switch } from 'antd';
+import React from 'react';
+import { Button } from '@/components/ui/button';
 import {
-  MenuOutlined,
-  HomeOutlined,
-  UserOutlined,
-  SettingOutlined,
-} from '@ant-design/icons';
-import SvgLogo from 'src/assets/logo.svg?react';
-import { useThemeStore } from 'src/stores/theme.store';
-import { useEffectiveTheme } from 'src/hooks/useEffectiveTheme';
-import type { SwitchChangeEventHandler } from 'antd/es/switch';
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { Switch } from '@/components/ui/switch';
+import { Home, User, Settings, Menu, Sun, Moon } from 'lucide-react';
 
-const { Header, Sider, Content } = Layout;
+import SvgLogo from '@/assets/logo.svg?react';
+import { useThemeStore } from '@/stores/theme.store';
+import { useEffectiveTheme } from '@/hooks/useEffectiveTheme';
 
-// 1. 메뉴 아이템 (Sider와 Drawer가 공유)
-const menuItems = [
-  { key: '1', icon: <HomeOutlined />, label: 'Dashboard' },
-  { key: '2', icon: <UserOutlined />, label: 'Profile' },
-  { key: '3', icon: <SettingOutlined />, label: 'Settings' },
-];
+// 네비게이션 메뉴 컴포넌트
+const AppNavigation: React.FC<{ isMobile?: boolean }> = ({
+  isMobile = false,
+}) => {
+  return (
+    <nav className="flex flex-col gap-2 px-4">
+      {/* TODO: 실제 라우팅을 위해 <Link> 컴포넌트와 조합해야 합니다. */}
+      <Button
+        variant="ghost"
+        className="justify-start w-full gap-2 text-primary bg-accent"
+      >
+        <Home className="size-4" /> Dashboard
+      </Button>
+      <Button variant="ghost" className="justify-start w-full gap-2">
+        <User className="size-4" /> Profile
+      </Button>
+      <Button variant="ghost" className="justify-start w-full gap-2">
+        <Settings className="size-4" /> Settings
+      </Button>
+    </nav>
+  );
+};
 
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const { setTheme } = useThemeStore();
   const mode = useEffectiveTheme();
-
   const isDarkMode = mode === 'dark';
-  const setIsDarkMode: SwitchChangeEventHandler = (checked) => {
+
+  const setIsDarkMode = (checked: boolean) => {
     setTheme(checked == true ? 'dark' : 'light');
   };
 
   return (
-    <Layout className="min-h-screen w-full">
-      <Sider width={200} className="hidden lg:block">
-        <div className="h-16 flex items-center justify-center text-xl font-bold">
-          <SvgLogo className="size-16 mr-2 fill-text" />
+    <div className="flex h-dvh w-full bg-background">
+      <aside className="hidden lg:block w-[200px] border-r bg-muted">
+        <div className="h-14 flex items-center justify-center">
+          <SvgLogo className="size-16 mr-2 fill-foreground" />
         </div>
-        <Menu mode="inline" defaultSelectedKeys={['1']} items={menuItems} />
-      </Sider>
+        <AppNavigation />
+      </aside>
 
-      <Layout>
-        <Header
-          className="p-0 flex items-center justify-between bg-background"
-        >
-          <div>
-            <Button
-              type="text"
-              icon={<MenuOutlined />}
-              onClick={() => setMobileDrawerOpen(true)}
-              className="block lg:hidden text-lg w-16 h-16"
-            />
+      <div className="flex-1 flex flex-col h-full">
+        <header className="z-10 h-14 flex items-center justify-between border-b bg-background px-4">
+          <div className="block lg:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="size-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[200px] p-0 pt-10">
+                <AppNavigation isMobile />
+              </SheetContent>
+            </Sheet>
           </div>
 
-          <div className="pr-4">
+          <div className="hidden lg:block" />
+
+          <div className="flex items-center gap-2">
+            <Sun className="size-5 text-muted-foreground" />
             <Switch
-              checkedChildren="Dark"
-              unCheckedChildren="Light"
+              id="theme-toggle"
               checked={isDarkMode}
-              onChange={setIsDarkMode}
+              onCheckedChange={setIsDarkMode}
             />
+            <Moon className="size-5 text-muted-foreground" />
           </div>
-        </Header>
+        </header>
 
-        <Content className="m-4 lg:m-6">
-          <div className="p-4 lg:p-6 h-[calc(100vh-128px)] bg-background radius">
-            {children}
-          </div>
-        </Content>
-      </Layout>
-
-      <Drawer
-        title="MENU"
-        placement="left"
-        onClose={() => setMobileDrawerOpen(false)}
-        open={mobileDrawerOpen}
-        classNames={{ body: 'p-0' }}
-      >
-        <Menu
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={menuItems}
-          // 메뉴 클릭 시 Drawer가 닫히도록 설정
-          onClick={() => setMobileDrawerOpen(false)}
-        />
-      </Drawer>
-    </Layout>
+        <main className="p-4 flex-1 min-h-0">
+          {children}
+        </main>
+      </div>
+    </div>
   );
 };
 

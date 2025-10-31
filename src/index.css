@@ -7,88 +7,38 @@
   font-display: swap;
   unicode-range: U+F02B0-F02B9;
 }
-@layer theme, base, antd, components, utilities;
+@import 'tailwindcss';
 
-@import 'tailwindcss/theme.css' layer(theme);
-@import 'tailwindcss/preflight.css' layer(base);
-@import 'antd/dist/reset.css' layer(antd);
-@import 'tailwindcss/utilities.css' layer(utilities);
+@custom-variant dark (&:is(.dark *));
 @plugin '@tailwindcss/typography';
-
-@theme inline {
-  --color-primary: var(--ant-color-primary);
-  --color-success: var(--ant-color-success);
-  --color-warning: var(--ant-color-warning);
-  --color-error: var(--ant-color-error);
-  --color-info: var(--ant-color-info);
-  --color-link: var(--ant-color-link);
-  --color-highlight: var(--ant-color-highlight);
-  --color-white: var(--ant-color-white);
-  --color-background: var(--ant-color-bg-container);
-  --color-layout: var(--ant-color-bg-layout);
-  --color-background-elevated: var(--ant-color-bg-elevated);
-  --color-background-disabled: var(--ant-color-bg-container-disabled);
-  --color-background-alt: var(--ant-color-fill-alter);
-  --color-background-mask: var(--ant-color-bg-mask);
-  --color-background-blur: var(--ant-color-bg-blur);
-  --color-text: var(--ant-color-text);
-  --color-text-secondary: var(--ant-color-text-secondary);
-  --color-text-tertiary: var(--ant-color-text-tertiary);
-  --color-text-quaternary: var(--ant-color-text-quaternary);
-  --color-text-heading: var(--ant-color-text-heading);
-  --color-text-description: var(--ant-color-text-description);
-  --color-text-disabled: var(--ant-color-text-disabled);
-  --color-text-placeholder: var(--ant-color-text-placeholder);
-  --color-border: var(--ant-color-border);
-  --color-border-secondary: var(--ant-color-border-secondary);
-  --color-split: var(--ant-color-split);
-  --color-fill: var(--ant-color-fill);
-  --color-fill-secondary: var(--ant-color-fill-secondary);
-  --color-fill-tertiary: var(--ant-color-fill-tertiary);
-  --color-fill-quaternary: var(--ant-color-fill-quaternary);
-  --color-primary-bg: var(--ant-color-primary-bg);
-  --color-success-bg: var(--ant-color-success-bg);
-  --color-warning-bg: var(--ant-color-warning-bg);
-  --color-error-bg: var(--ant-color-error-bg);
-  --color-info-bg: var(--ant-color-info-bg);
-}
+@plugin 'tailwindcss-animate';
 
 @layer utilities {
+  .dark {
+    color-scheme: dark;
+  }
   .prose {
-    --tw-prose-body: var(--ant-color-text);
-    --tw-prose-headings: var(--ant-color-text-heading);
-    --tw-prose-links: var(--ant-color-link);
-    --tw-prose-bold: var(--ant-color-text-heading);
-    --tw-prose-bullets: var(--ant-color-text-secondary);
-    --tw-prose-hr: var(--ant-color-border-secondary);
-    --tw-prose-quotes: var(--ant-color-text-secondary);
-    --tw-prose-quote-borders: var(--ant-color-border-secondary);
-    --tw-prose-code: var(--ant-color-text-heading);
-    --tw-prose-pre-code: var(--ant-color-text-heading);
-    --tw-prose-pre-bg: var(--ant-color-fill-tertiary);
-    --tw-prose-th-borders: var(--ant-color-border-secondary);
-    --tw-prose-td-borders: var(--ant-color-border-secondary);
-
-    /* --- 다크 모드 Prose 스타일 (prose-invert가 사용) --- */
-    /* 여기도 마찬가지로 --ant- 변수를 직접 참조합니다. */
-    --tw-prose-invert-body: var(--ant-color-text);
-    --tw-prose-invert-headings: var(--ant-color-text-heading);
-    --tw-prose-invert-links: var(--ant-color-link);
-    --tw-prose-invert-bold: var(--ant-color-text-heading);
-    --tw-prose-invert-bullets: var(--ant-color-text-secondary);
-    --tw-prose-invert-hr: var(--ant-color-border-secondary);
-    --tw-prose-invert-quotes: var(--ant-color-text-secondary);
-    --tw-prose-invert-quote-borders: var(--ant-color-border-secondary);
-    --tw-prose-invert-code: var(--ant-color-text-heading);
-    --tw-prose-invert-pre-code: var(--ant-color-text-heading);
-    --tw-prose-invert-pre-bg: var(--ant-color-fill-tertiary);
-    --tw-prose-invert-th-borders: var(--ant-color-border-secondary);
-    --tw-prose-invert-td-borders: var(--ant-color-border-secondary);
+    --tw-prose-body: var(--foreground);
+    --tw-prose-headings: var(--foreground);
+    --tw-prose-lead: var(--muted-foreground);
+    --tw-prose-links: var(--primary);
+    --tw-prose-bold: var(--foreground);
+    --tw-prose-counters: var(--muted-foreground);
+    --tw-prose-bullets: var(--muted-foreground);
+    --tw-prose-hr: var(--border);
+    --tw-prose-quotes: var(--foreground);
+    --tw-prose-quote-borders: var(--border);
+    --tw-prose-captions: var(--muted-foreground);
+    --tw-prose-code: var(--primary); /* 인라인 코드를 강조 */
+    --tw-prose-pre-code: var(--foreground); /* 코드 블럭 내부 텍스트 */
+    --tw-prose-pre-bg: var(--muted); /* 코드 블럭 배경 */
+    --tw-prose-th-borders: var(--border);
+    --tw-prose-td-borders: var(--border);
   }
 
   .prose-secondary {
-    --tw-prose-body: var(--ant-color-text-secondary); 
-    --tw-prose-invert-body: var(--ant-color-text-secondary)
+    --tw-prose-body: var(--ant-color-text-secondary);
+    --tw-prose-invert-body: var(--ant-color-text-secondary);
   }
 
   .prose ul,
@@ -126,4 +76,120 @@
       'Segoe UI Symbol',
       sans-serif;
   }
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.208 0.042 265.755);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }

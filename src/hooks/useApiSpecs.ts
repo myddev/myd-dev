@@ -1,7 +1,7 @@
 // src/hooks/useApiSpecs.ts
 import { queryOptions, useQuery } from '@tanstack/react-query';
-import { fetchApiSpecs } from 'src/api/fetchApiSpecs'; 
-import type IApiSpec from 'src/types/IApiSpec';
+import { fetchApiSpecs } from '@/api/fetchApiSpecs'; 
+import type IApiSpec from '@/types/IApiSpec';
 
 export const apiSpecsQueryOptions = queryOptions<IApiSpec[], Error>({
   queryKey: ['apiSpecs'],

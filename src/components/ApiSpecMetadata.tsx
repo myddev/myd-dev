@@ -1,5 +1,11 @@
-import { Descriptions, Tag, Space } from 'antd';
-import type IApiSpec from 'src/types/IApiSpec';
+import type IApiSpec from '@/types/IApiSpec';
+import { Badge } from '@/components/ui/badge';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from '@/components/ui/table';
 
 interface ApiSpecMetadataProps {
   api: IApiSpec;
@@ -16,62 +22,86 @@ export default function ApiSpecMetadata({ api }: ApiSpecMetadataProps) {
     requestContentType,
   } = api;
 
-  // HTTP Method에 따라 태그 색상 결정
-  const getMethodColor = (method: string) => {
+  // 3. HTTP Method에 따라 Badge variant 결정
+  const getMethodVariant = (method: string): "default" | "secondary" | "outline" | "destructive" | null | undefined => {
     switch (method.toUpperCase()) {
       case 'POST':
-        return 'blue';
-      case 'GET':
-        return 'green';
-      case 'PUT':
-        return 'orange';
-      case 'DELETE':
-        return 'red';
-      default:
         return 'default';
+      case 'GET':
+        return 'secondary';
+      case 'PUT':
+        return 'outline';
+      case 'DELETE':
+        return 'destructive';
+      default:
+        return 'outline';
     }
   };
 
   return (
-    <Descriptions bordered size="small" column={1}>
-      <Descriptions.Item label="API ID">
-        <span className="font-mono">{apiId}</span>
-      </Descriptions.Item>
+    <Table>
+      <TableBody>
+        <TableRow>
+          <TableCell className="w-48 font-medium">API ID</TableCell>
+          <TableCell>
+            <span className="font-mono">{apiId}</span>
+          </TableCell>
+        </TableRow>
 
-      <Descriptions.Item label="Version">
-        <Tag>{version}</Tag>
-      </Descriptions.Item>
+        <TableRow>
+          <TableCell className="font-medium">Version</TableCell>
+          <TableCell>
+            <Badge variant="outline">{version}</Badge>
+          </TableCell>
+        </TableRow>
 
-      <Descriptions.Item label="Method & Resource">
-        <Tag color={getMethodColor(httpMethod)} className="font-bold">
-          {httpMethod}
-        </Tag>
-        <code className="ml-2 bg-background-layout dark:bg-background p-1 rounded">
-          {resource}
-        </code>
-      </Descriptions.Item>
+        <TableRow>
+          <TableCell className="font-medium">Method & Resource</TableCell>
+          <TableCell>
+            <Badge variant={getMethodVariant(httpMethod)} className="font-bold">
+              {httpMethod}
+            </Badge>
+            <code className="ml-2 bg-muted p-1.5 rounded-sm font-mono text-sm">
+              {resource}
+            </code>
+          </TableCell>
+        </TableRow>
 
-      <Descriptions.Item label="Industry">
-        <Space wrap size={[0, 8]}>
-          {industry?.map((ind) => (
-            <Tag key={ind}>{ind}</Tag>
-          ))}
-        </Space>
-      </Descriptions.Item>
+        <TableRow>
+          <TableCell className="font-medium">Industry</TableCell>
+          <TableCell>
+            <div className="flex flex-wrap gap-2">
+              {industry?.map((ind) => (
+                <Badge key={ind} variant="outline">
+                  {ind}
+                </Badge>
+              ))}
+            </div>
+          </TableCell>
+        </TableRow>
 
-      <Descriptions.Item label="Scope">
-        <Space wrap size={[0, 8]}>
-          {scope?.map((sc) => (
-            <Tag key={sc} color="purple">
-              {sc}
-            </Tag>
-          ))}
-        </Space>
-      </Descriptions.Item>
+        <TableRow>
+          <TableCell className="font-medium">Scope</TableCell>
+          <TableCell>
+            <div className="flex flex-wrap gap-2">
+              {scope?.map((sc) => (
+                <Badge key={sc} variant="secondary">
+                  {sc}
+                </Badge>
+              ))}
+            </div>
+          </TableCell>
+        </TableRow>
 
-      <Descriptions.Item label="Request Type">
-        <code className="text-xs">{requestContentType}</code>
-      </Descriptions.Item>
-    </Descriptions>
+        <TableRow>
+          <TableCell className="font-medium">Request Type</TableCell>
+          <TableCell>
+            <code className="bg-muted p-1.5 rounded-sm font-mono text-sm">
+              {requestContentType}
+            </code>
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
   );
 }

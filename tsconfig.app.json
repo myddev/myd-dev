@@ -7,9 +7,11 @@
     "module": "ESNext",
     "types": ["vite/client", "vite-plugin-svgr/client"],
     "skipLibCheck": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "src/*": ["src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
 
     /* Bundler mode */

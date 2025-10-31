@@ -5,8 +5,8 @@ import lunr from 'lunr';
 // 1. Lunr 한국어 지원 활성화
 import lunrStemmerSupport from 'lunr-languages/lunr.stemmer.support.js';
 import lunrKo from 'lunr-languages/lunr.ko.js';
-import type IApiSpec from 'src/types/IApiSpec';
-import type IApiSpecField from 'src/types/IApiSpecField';
+import type IApiSpec from '@/types/IApiSpec';
+import type IApiSpecField from '@/types/IApiSpecField';
 
 lunrStemmerSupport(lunr);
 lunrKo(lunr);

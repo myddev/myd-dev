@@ -1,6 +1,6 @@
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import { QueryClient } from '@tanstack/react-query';
-import MainLayout from 'src/components/MainLayout';
+import MainLayout from '@/components/MainLayout';
 
 // 라우터 컨텍스트 타입 정의
 interface MyRouterContext {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useThemeStore } from 'src/stores/theme.store';
+import { useThemeStore } from '@/stores/theme.store';
 
 /**
  * Zustand 스토어와 OS 설정을 조합하여

@@ -6,9 +6,6 @@ import type IApiSpecMessage from "src/types/IApiSpecMessage";
 
 type RawApiSpecField = Omit<IApiSpecField, 'key'>;
 
-/**
- * 1. antd Table에 필요한 'key'를 재귀적으로 추가하는 헬퍼 함수
- */
 const addKeysToFields = (
   fields: RawApiSpecField[],
   parentKey: string = '',
@@ -30,9 +27,6 @@ const addKeysToFields = (
   });
 };
 
-/**
- * 2. RawApiSpecMessage를 IApiSpecMessage로 변환 (key 추가)
- */
 const processMessage = (
   message: RawApiSpecMessage,
 ): IApiSpecMessage => {

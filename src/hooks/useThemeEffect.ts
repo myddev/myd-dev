@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useEffectiveTheme } from 'src/hooks/useEffectiveTheme';
+import { useEffectiveTheme } from '@/hooks/useEffectiveTheme';
 
 /**
  * Tailwind의 dark class를 <html> 태그에 적용/제거하는 훅.
