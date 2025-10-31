@@ -7,6 +7,9 @@ import type IApiSpec from '@/types/IApiSpec';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
+import { Route as SearchRoute } from '@/routes/search';
+import { X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface ApiSpecDetailProps {
   api: IApiSpec;
@@ -15,10 +18,34 @@ interface ApiSpecDetailProps {
 export default function ApiSpecDetail({ api }: ApiSpecDetailProps) {
   const hasErrorResponse = !!api.errorResponse;
 
+  const navigate = SearchRoute.useNavigate();
+  const currentSearch = SearchRoute.useSearch();
+
+  const handleClose = () => {
+    // 4. 현재 search params를 복사하고, 'brand' 키의 값을 undefined로 설정합니다.
+    const newSearch = {
+      ...currentSearch,
+      apiId: undefined, // 👈 이 부분이 핵심입니다!
+    };
+
+    // 5. 새로운 search params로 페이지를 이동(갱신)합니다.
+    navigate({
+      search: newSearch,
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div>
-        <div className="flex flex-row gap-2 items-center">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleClose}
+          className="h-8 w-8"
+        >
+          <X className="h-5 w-5 text-muted-foreground" />
+        </Button>
+        <div className="flex flex-row gap-2 items-center mt-2">
           <h2 className="text-2xl font-semibold tracking-tight mb-2">
             {`[${api.apiId}]`}
           </h2>

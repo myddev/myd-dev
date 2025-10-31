@@ -24,7 +24,7 @@ export default function ApiSpecMetadata({ api }: ApiSpecMetadataProps) {
         <TableRow>
           <TableCell className="w-48 font-medium">API ID</TableCell>
           <TableCell>
-            <span className="font-mono">{apiId}</span>
+            <span>{apiId}</span>
           </TableCell>
         </TableRow>
         <TableRow>
