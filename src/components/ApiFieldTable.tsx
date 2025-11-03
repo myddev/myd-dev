@@ -1,8 +1,7 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import type IApiSpecField from '@/types/IApiSpecField';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-
 import {
   Table,
   TableBody,
@@ -15,13 +14,12 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 
-const ExpandableNote: React.FC<{ note: string; isSimple: boolean }> = ({
+const ExpandableNote = ({
   note,
-  isSimple,
-}) => {
+}: {note: string}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  if (!note || isSimple) {
+  if (!note) {
     return null;
   }
 
@@ -53,7 +51,6 @@ const ExpandableNote: React.FC<{ note: string; isSimple: boolean }> = ({
 
 interface ApiFieldTableProps {
   fields: IApiSpecField[];
-  isSimple?: boolean;
 }
 
 /**
@@ -61,13 +58,11 @@ interface ApiFieldTableProps {
  */
 function ApiFieldRow({
   field,
-  isSimple,
   level,
   expandedKeys,
   onToggle,
 }: {
   field: IApiSpecField;
-  isSimple: boolean;
   level: number;
   expandedKeys: React.Key[];
   onToggle: (key: React.Key) => void;
@@ -75,34 +70,21 @@ function ApiFieldRow({
   const hasChildren = field.children && field.children.length > 0;
   const isExpanded = expandedKeys.includes(field.key);
 
-  // ✨ 각 레벨 당 들여쓰기 크기 (rem)
-  const indentPerLevel = 1.5;
+  const indentPerLevel = 1.5; // rem
 
   return (
     <Fragment key={field.key}>
-      {/* 1. 부모 Row 렌더링 */}
       <TableRow>
         <TableCell className="align-top font-medium">
-          {/*            * ✨ 'relative' 클래스 추가
-           * 'paddingLeft'를 style에서 여기로 이동
-           */}
           <div
             className="relative flex flex-row items-start gap-1"
             style={{ paddingLeft: `${level * indentPerLevel}rem` }}
           >
-            {/* ✨ 1. 세로줄(Tree Guides) 렌더링 */}
             {Array.from({ length: level }).map((_, i) => (
               <span
                 key={i}
                 className="absolute top-0 bottom-0 w-px bg-border" // Tailwind 'border' 색상 사용
                 style={{
-                /*
-                 * 'left' 위치 계산:
-                 * 1. (i * indentPerLevel)rem: 현재 레벨(i)의 라인 시작 위치
-                 * 2. + (indentPerLevel / 2)rem: 라인을 들여쓰기 공간의 중앙에 배치
-                 * 3. - (level * indentPerLevel)rem: 부모 div의 paddingLeft 값을 빼서 
-                 * Cell의 왼쪽 끝을 기준으로 위치를 잡음 (음수 left 값 활용)
-                 */
                   left: `calc(${i * indentPerLevel}rem + ${
                     indentPerLevel / 2
                   }rem - ${level * indentPerLevel}rem)`,
@@ -141,7 +123,7 @@ function ApiFieldRow({
 
         <TableCell className="align-top">
           <p>{field.itemDescription}</p>
-          <ExpandableNote note={field.note} isSimple={isSimple} />
+          <ExpandableNote note={field.note} />
         </TableCell>
       </TableRow>
 
@@ -152,7 +134,6 @@ function ApiFieldRow({
           <ApiFieldRow
             key={childField.key}
             field={childField}
-            isSimple={isSimple}
             level={level + 1} // ✨ 깊이 + 1
             expandedKeys={expandedKeys}
             onToggle={onToggle}
@@ -167,7 +148,6 @@ function ApiFieldRow({
  */
 export default function ApiFieldTable({
   fields,
-  isSimple = false,
 }: ApiFieldTableProps) {
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
 
@@ -177,26 +157,45 @@ export default function ApiFieldTable({
     );
   };
 
+  useEffect(() => {
+    setExpandedKeys(collectAllKeys(fields))
+  }, [fields]);
+
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[30%]">Field</TableHead>
-          <TableHead className="w-[70%]">Description</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {fields.map((field) => (
-          <ApiFieldRow
-            key={field.key}
-            field={field}
-            isSimple={isSimple}
-            level={0}
-            expandedKeys={expandedKeys}
-            onToggle={handleToggle}
-          />
-        ))}
-      </TableBody>
-    </Table>
+    <div className="w-full overflow-x-auto">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[30%]">Field</TableHead>
+            <TableHead className="w-[70%]">Description</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {fields.map((field) => (
+            <ApiFieldRow
+              key={field.key}
+              field={field}
+              level={0}
+              expandedKeys={expandedKeys}
+              onToggle={handleToggle}
+            />
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
+}
+
+function collectAllKeys(fields: IApiSpecField[]): React.Key[] {
+  const keys: React.Key[] = [];
+
+  function traverse(field: IApiSpecField) {
+    if (field.children && field.children.length > 0) {
+      keys.push(field.key);
+      field.children.forEach(traverse);
+    }
+  }
+
+  fields.forEach(traverse);
+  return keys;
 }

@@ -6,7 +6,8 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Switch } from '@/components/ui/switch';
-import { Home, User, Settings, Menu, Sun, Moon } from 'lucide-react';
+import { Home, Search, Menu, Sun, Moon, Github } from 'lucide-react';
+import { Link } from '@tanstack/react-router';
 
 import SvgLogo from '@/assets/logo.svg?react';
 import { useThemeStore } from '@/stores/theme.store';
@@ -14,21 +15,58 @@ import { useEffectiveTheme } from '@/hooks/useEffectiveTheme';
 
 // 네비게이션 메뉴 컴포넌트
 const AppNavigation = () => {
+  const { setTheme } = useThemeStore();
+  const mode = useEffectiveTheme();
+  const isDarkMode = mode === 'dark';
+
+  const setIsDarkMode = (checked: boolean) => {
+    setTheme(checked ? 'dark' : 'light');
+  };
+
   return (
-    <nav className="flex flex-col gap-2 px-4">
-      {/* TODO: 실제 라우팅을 위해 <Link> 컴포넌트와 조합해야 합니다. */}
-      <Button
-        variant="ghost"
-        className="justify-start w-full gap-2 text-primary bg-accent"
-      >
-        <Home className="size-4" /> Dashboard
-      </Button>
-      <Button variant="ghost" className="justify-start w-full gap-2">
-        <User className="size-4" /> Profile
-      </Button>
-      <Button variant="ghost" className="justify-start w-full gap-2">
-        <Settings className="size-4" /> Settings
-      </Button>
+    <nav className="flex flex-col h-full justify-between">
+      <div className="flex flex-col gap-2 px-4">
+        <Button
+          variant="ghost"
+          className="justify-start w-full gap-2"
+          asChild
+        >
+          <Link to="/" activeProps={{ className: 'text-primary bg-accent' }}>
+            <Home className="size-4" /> 홈
+          </Link>
+        </Button>
+        <Button
+          variant="ghost"
+          className="justify-start w-full gap-2"
+          asChild
+        >
+          <Link to="/search" activeProps={{ className: 'text-primary bg-accent' }}>
+            <Search className="size-4" /> 검색
+          </Link>
+        </Button>
+      </div>
+
+      <div className="px-4 pb-4 space-y-3 border-t pt-4">
+        <div className="flex items-center justify-center gap-2">
+          <Sun className="size-5 text-muted-foreground" />
+          <Switch
+            id="theme-toggle"
+            checked={isDarkMode}
+            onCheckedChange={setIsDarkMode}
+          />
+          <Moon className="size-5 text-muted-foreground" />
+        </div>
+        <a
+          href="https://github.com/myddev/myd-dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center"
+        >
+          <Button variant="ghost" size="icon">
+            <Github className="size-5" />
+          </Button>
+        </a>
+      </div>
     </nav>
   );
 };
@@ -38,24 +76,20 @@ interface MainLayoutProps {
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const { setTheme } = useThemeStore();
-  const mode = useEffectiveTheme();
-  const isDarkMode = mode === 'dark';
-
-  const setIsDarkMode = (checked: boolean) => {
-    setTheme(checked == true ? 'dark' : 'light');
-  };
-
   return (
     <div className="flex h-dvh w-full bg-background">
-      <aside className="hidden lg:block w-[200px] border-r bg-muted">
-        <div className="h-14 flex items-center justify-center">
-          <SvgLogo className="size-16 mr-2 fill-foreground" />
+      <aside className="hidden lg:flex w-[200px] border-r bg-muted flex-col flex-shrink-0">
+        <div className="h-14 flex items-center justify-center flex-shrink-0">
+          <Link to="/">
+            <SvgLogo className="size-16 mr-2 fill-foreground cursor-pointer" />
+          </Link>
         </div>
-        <AppNavigation />
+        <div className="flex-1 min-h-0">
+          <AppNavigation />
+        </div>
       </aside>
 
-      <div className="flex-1 flex flex-col h-full">
+      <div className="flex-1 flex flex-col h-full min-w-0">
         <header className="z-10 h-14 flex items-center justify-between border-b bg-background px-4">
           <div className="block lg:hidden">
             <Sheet>
@@ -70,16 +104,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             </Sheet>
           </div>
 
-          <div className="hidden lg:block" />
-
-          <div className="flex items-center gap-2">
-            <Sun className="size-5 text-muted-foreground" />
-            <Switch
-              id="theme-toggle"
-              checked={isDarkMode}
-              onCheckedChange={setIsDarkMode}
-            />
-            <Moon className="size-5 text-muted-foreground" />
+          <div className="lg:hidden flex items-center">
+            <Link to="/">
+              <SvgLogo className="size-12 fill-foreground" />
+            </Link>
           </div>
         </header>
 

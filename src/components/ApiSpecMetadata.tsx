@@ -28,7 +28,7 @@ export default function ApiSpecMetadata({ api }: ApiSpecMetadataProps) {
           </TableCell>
         </TableRow>
         <TableRow>
-          <TableCell className="font-medium">Method & Resource</TableCell>
+          <TableCell className="font-medium">Resource</TableCell>
           <TableCell>
             <Badge
               className={cn(

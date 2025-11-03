@@ -51,19 +51,6 @@ export default function SearchLayout({
         <InputGroupAddon align="inline-start">
           <Search className="h-5 w-5 text-muted-foreground" />
         </InputGroupAddon>
-
-        {inputValue && (
-          <InputGroupAddon align="inline-end">
-            <InputGroupButton
-              variant="ghost"
-              size="icon-xs" // 스펙에 명시된 작은 아이콘 버튼 크기
-              onClick={() => setInputValue('')}
-              aria-label="Clear search"
-            >
-              <X className="h-4 w-4" />
-            </InputGroupButton>
-          </InputGroupAddon>
-        )}
       </InputGroup>
 
       <div className="flex flex-1 overflow-hidden">
