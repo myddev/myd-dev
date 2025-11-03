@@ -15,9 +15,7 @@ export default function ApiMessageDisplay({ message }: ApiMessageDisplayProps) {
   const hasBody = message.body && message.body.length > 0;
   const hasParams = message.params && message.params.length > 0;
 
-  // ✨ [수정] 탭을 보여줄지 결정하는 변수 (둘 다 있어야 true)
   const showTabs = hasBody && hasParams;
-  // ✨ [수정] Body 또는 Params 중 하나라도 있는지 확인
   const showContent = hasBody || hasParams;
 
   return (
@@ -25,15 +23,13 @@ export default function ApiMessageDisplay({ message }: ApiMessageDisplayProps) {
       {message.headers && message.headers.length > 0 && (
         <div>
           <h3 className="text-lg font-semibold mb-2">Headers</h3>
-          <ApiFieldTable fields={message.headers} isSimple />
+          <ApiFieldTable fields={message.headers} />
         </div>
       )}
 
-      {/* ✨ [수정] 렌더링 로직 분기 */}
       {showContent && (
         <>
           {showTabs ? (
-            // 1. Body와 Params 둘 다 있을 경우: 탭 사용
             <Tabs defaultValue="body" className="w-full">
               <TabsList>
                 <TabsTrigger value="body">Body</TabsTrigger>
@@ -47,7 +43,6 @@ export default function ApiMessageDisplay({ message }: ApiMessageDisplayProps) {
               </TabsContent>
             </Tabs>
           ) : (
-            // 2. 둘 중 하나만 있을 경우: 탭 없이 바로 렌더링
             <>
               {hasBody && (
                 <div>
@@ -58,7 +53,6 @@ export default function ApiMessageDisplay({ message }: ApiMessageDisplayProps) {
               )}
               {hasParams && (
                 <div>
-                    {/* 탭 트리거 대신 제목 추가 */}
                   <h3 className="text-lg font-semibold mb-2">Query Params</h3>
                   <ApiFieldTable fields={message.params!} />
                 </div>
