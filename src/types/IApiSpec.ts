@@ -12,7 +12,6 @@ export default interface IApiSpec {
   httpMethod: string;
   transmissionCycle?: string;
   providerRequesters: IProviderRequesterPair[];
-  uri: string;
   description: string;
   referenceTime?: string;
   requestContentType: string;
