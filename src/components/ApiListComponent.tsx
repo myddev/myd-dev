@@ -13,9 +13,9 @@ export default function ApiListComponent({ apis }: Props) {
     <div className="flex flex-col gap-2">
       {apis.map((api) => (
         <Link
-          key={api.apiId}
+          key={api.compositeId}
           to="/search"
-          search={{ apiId: api.apiId }}
+          search={{ id: api.compositeId }}
           className="w-full"
           activeProps={() => ({
             className: 'active-link', // 예시 클래스

@@ -51,6 +51,7 @@ export const fetchApiSpecs = async (): Promise<IApiSpec[]> => {
 
   const processedData: IApiSpec[] = rawData.list.map((spec) => ({
     ...spec,
+    compositeId: `${spec.apiId}-${spec.version}`,
     request: processMessage(spec.request),
     response: processMessage(spec.response),
     errorResponse: spec.errorResponse
