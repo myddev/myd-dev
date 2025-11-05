@@ -24,7 +24,7 @@ export default function ApiSpecDetail({ api }: ApiSpecDetailProps) {
   const handleClose = () => {
     const newSearch = {
       ...currentSearch,
-      apiId: undefined,
+      id: undefined,
     };
 
     navigate({

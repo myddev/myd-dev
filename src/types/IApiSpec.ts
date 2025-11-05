@@ -2,6 +2,7 @@ import type IApiSpecMessage from "src/types/IApiSpecMessage";
 import type IProviderRequesterPair from "src/types/IProviderRequesterPair";
 
 export default interface IApiSpec {
+  compositeId: string; // API ID + Version(PK)
   apiCode?: string;
   apiId: string;
   apiName: string;

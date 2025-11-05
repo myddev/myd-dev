@@ -8,7 +8,7 @@ import ApiListComponent from '@/components/ApiListComponent';
 import ApiSpecDetail from '@/components/ApiSpecDetail';
 
 const searchSearchSchema = z.object({
-  apiId: z.string().optional(), // apiId는 문자열이며 선택적
+  id: z.string().optional(), // apiId는 문자열이며 선택적
 });
 
 export const Route = createFileRoute('/search')({
@@ -27,8 +27,8 @@ function SearchRouteComponent() {
   const allApis = Route.useLoaderData();
   const initializeIndex = useSearchStore((s) => s.initializeIndex);
   const filteredApis = useSearchStore((s) => s.filteredApis);
-  const { apiId } = Route.useSearch();
-  const api = useMemo(() => allApis.find((v) => v.apiId === apiId), [apiId]);
+  const { id } = Route.useSearch();
+  const api = useMemo(() => allApis.find((v) => v.compositeId === id), [id, allApis]);
   useEffect(() => {
     initializeIndex(allApis);
   }, [allApis, initializeIndex]);

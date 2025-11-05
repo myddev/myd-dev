@@ -47,7 +47,7 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
 
     // 5-1. 나중에 'apiId'로 원본 데이터를 찾기 위한 Map 생성
     const dataMap = new Map<string, IApiSpec>();
-    allApis.forEach(api => dataMap.set(api.apiId, api));
+    allApis.forEach(api => dataMap.set(api.compositeId, api));
 
     // 5-2. Lunr 인덱스 빌드
     const idx = lunr(function () {
@@ -55,7 +55,7 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
       this.use((lunr as any).ko);
 
       // 5-3. 검색 결과로 반환할 고유 ID 설정
-      this.ref('apiId');
+      this.ref('compositeId');
 
       // 5-4. 검색 대상 필드 및 가중치(boost) 설정      
       this.field('apiId', { boost: 10 });
@@ -70,6 +70,7 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
       // 5-5. 데이터 인덱싱 (검색용 문서로 변환)
       allApis.forEach((api) => {
         this.add({
+          compositeId: api.compositeId,
           apiId: api.apiId,
           apiName: api.apiName,
           apiCode: api.apiCode,
