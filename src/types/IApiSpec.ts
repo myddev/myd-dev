@@ -1,8 +1,10 @@
 import type IApiSpecMessage from "src/types/IApiSpecMessage";
 import type IProviderRequesterPair from "src/types/IProviderRequesterPair";
+import type RawApiSpec from "src/types/dto/RawApiSpec";
 
 export default interface IApiSpec {
   compositeId: string; // API ID + Version(PK)
+  rawSpec: RawApiSpec;
   apiCode?: string;
   apiId: string;
   apiName: string;

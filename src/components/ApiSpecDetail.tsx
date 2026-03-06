@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { useEffect, useState } from 'react';
 import ApiMessageDisplay from '@/components/ApiMessageDisplay';
 import ApiSpecMetadata from '@/components/ApiSpecMetadata';
 import type IApiSpec from '@/types/IApiSpec';
@@ -8,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { Route as SearchRoute } from '@/routes/search';
-import { X } from 'lucide-react';
+import { Check, Copy, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface ApiSpecDetailProps {
@@ -17,6 +18,7 @@ interface ApiSpecDetailProps {
 
 export default function ApiSpecDetail({ api }: ApiSpecDetailProps) {
   const hasErrorResponse = !!api.errorResponse;
+  const [copied, setCopied] = useState(false);
 
   const navigate = SearchRoute.useNavigate();
   const currentSearch = SearchRoute.useSearch();
@@ -31,6 +33,24 @@ export default function ApiSpecDetail({ api }: ApiSpecDetailProps) {
       search: newSearch,
     });
   };
+
+  const handleCopySpec = async () => {
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(api.rawSpec, null, 2));
+      setCopied(true);
+    } catch (error) {
+      console.error('Failed to copy API spec as JSON', error);
+    }
+  };
+
+  useEffect(() => {
+    if (!copied) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => setCopied(false), 1500);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
 
   return (
     <div className="space-y-6">
@@ -47,6 +67,19 @@ export default function ApiSpecDetail({ api }: ApiSpecDetailProps) {
           {`[${api.apiId}] ${api.apiName}`}
         </h2>
         <Badge variant="default">{api.version}</Badge>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleCopySpec}
+          className="ml-auto"
+        >
+          {copied ? (
+            <Check className="h-4 w-4 mr-1" />
+          ) : (
+            <Copy className="h-4 w-4 mr-1" />
+          )}
+          {copied ? '복사됨' : 'JSON 복사'}
+        </Button>
       </div>
 
       <div className="prose prose-sm prose-muted max-w-none">

@@ -37,9 +37,8 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
 
   // 5. 인덱스 초기화 액션
   initializeIndex: (allApis) => {
-    // 이미 인덱싱되었으면 중복 실행 방지
+    // 이미 인덱싱되었으면 완전히 중단 (검색 결과 유지)
     if (get().lunrIndex) {
-      set({ filteredApis: allApis }); // 필터 목록만 초기화
       return;
     }
     
