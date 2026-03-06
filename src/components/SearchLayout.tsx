@@ -55,7 +55,7 @@ export default function SearchLayout({
 
       <div className="flex flex-1 overflow-hidden">
         <div
-          className={`h-full overflow-y-auto ${
+          className={`h-full overflow-y-auto scrollbar-hidden ${
             hasDetailPanel
               ? 'w-full hidden lg:block lg:w-1/3 border-r pr-4 border-border'
               : 'w-full'
