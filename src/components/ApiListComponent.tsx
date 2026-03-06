@@ -15,7 +15,7 @@ export default function ApiListComponent({ apis }: Props) {
         <Link
           key={api.compositeId}
           to="/search"
-          search={{ id: api.compositeId }}
+          search={(prev) => ({ ...prev, id: api.compositeId })}
           className="w-full"
           activeProps={() => ({
             className: 'active-link', // 예시 클래스

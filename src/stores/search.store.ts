@@ -21,10 +21,12 @@ interface SearchStore {
   lunrIndex: lunr.Index | null;
   apiDataMap: Map<string, IApiSpec>;
   filteredApis: IApiSpec[];
+  query: string;
   isIndexing: boolean;
   
   // 액션
   initializeIndex: (allApis: IApiSpec[]) => void;
+  setQuery: (query: string) => void;
   performSearch: (query: string) => void;
 }
 
@@ -33,6 +35,7 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
   lunrIndex: null,
   apiDataMap: new Map(),
   filteredApis: [],
+  query: '',
   isIndexing: false,
 
   // 5. 인덱스 초기화 액션
@@ -92,9 +95,14 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
     });
   },
 
+  setQuery: (query) => {
+    set({ query });
+  },
+
   // 6. 검색 실행 액션
   performSearch: (query) => {
     const { lunrIndex, apiDataMap } = get();
+    set({ query });
 
     // 6-1. 검색어가 없으면 전체 목록 반환
     if (!query || !lunrIndex) {

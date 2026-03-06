@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   InputGroup,
   InputGroupAddon,
-  InputGroupButton,
   InputGroupInput,
 } from '@/components/ui/input-group';
-import { Search, X } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useSearchStore } from '@/stores/search.store';
 import useDebounce from '@/hooks/useDebounce';
 
@@ -18,12 +17,13 @@ export default function SearchLayout({
   listPanel,
   detailPanel,
 }: SearchLayoutProps) {
+  const query = useSearchStore((s) => s.query);
+  const setQuery = useSearchStore((s) => s.setQuery);
   const performSearch = useSearchStore((s) => s.performSearch);
   const isIndexing = useSearchStore((s) => s.isIndexing);
   const hasDetailPanel = detailPanel !== null;
 
-  const [inputValue, setInputValue] = useState('');
-  const debouncedQuery = useDebounce(inputValue, 150);
+  const debouncedQuery = useDebounce(query, 150);
 
   useEffect(() => {
     performSearch(debouncedQuery);
@@ -37,13 +37,13 @@ export default function SearchLayout({
           placeholder="API 이름, ID, 파라미터명 등으로 검색..."
           className="h-10"
           disabled={isIndexing}
-          value={inputValue}
+          value={query}
           onChange={(e) => {
-            setInputValue(e.target.value);
+            setQuery(e.target.value);
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              performSearch(inputValue); // 즉시 검색
+              performSearch(query); // 즉시 검색
             }
           }}
         />
